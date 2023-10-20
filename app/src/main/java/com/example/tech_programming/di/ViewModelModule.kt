@@ -2,6 +2,7 @@ package com.example.tech_programming.di
 
 import androidx.lifecycle.ViewModel
 import com.example.tech_programming.presentation.shopFragment.requesItemFragment.RequestItemViewModel
+import com.example.tech_programming.presentation.shopFragment.requestShopName.RequestShopNameViewModel
 import com.example.tech_programming.presentation.shopFragment.shopItemInfoFragment.ShopItemInfoViewModel
 import com.example.tech_programming.presentation.shopFragment.shopNameInfoFragment.ShopNameInfoViewModel
 import com.example.tech_programming.presentation.storageItemFragment.StorageItemViewModel
@@ -31,4 +32,9 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(RequestItemViewModel::class)
     fun bindRequestItemViewModel(viewModel: RequestItemViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(RequestItemViewModel::class)
+    fun bindRequestShopNameViewModel(viewModel: RequestShopNameViewModel): ViewModel
 }

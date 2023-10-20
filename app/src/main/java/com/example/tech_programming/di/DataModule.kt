@@ -10,7 +10,10 @@ import com.example.tech_programming.data.impl.RequestItemImpl
 import com.example.tech_programming.data.impl.ShopItemImpl
 import com.example.tech_programming.data.impl.ShopNameImpl
 import com.example.tech_programming.data.impl.StorageItemImpl
-import com.example.tech_programming.domain.AppRepository
+import com.example.tech_programming.domain.repository.RequestItemRepository
+import com.example.tech_programming.domain.repository.ShopItemRepository
+import com.example.tech_programming.domain.repository.ShopNameRepository
+import com.example.tech_programming.domain.repository.StorageItemRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -19,19 +22,19 @@ import dagger.Provides
 interface DataModule {
     @ApplicationScope
     @Binds
-    fun bindRequestItemRepository(impl: RequestItemImpl):AppRepository
+    fun bindRequestItemRepository(impl: RequestItemImpl): RequestItemRepository
 
     @ApplicationScope
     @Binds
-    fun bindShopItemRepository(impl: ShopItemImpl):AppRepository
+    fun bindShopItemRepository(impl: ShopItemImpl): ShopItemRepository
 
     @ApplicationScope
     @Binds
-    fun bindShopNameRepository(impl: ShopNameImpl):AppRepository
+    fun bindShopNameRepository(impl: ShopNameImpl): ShopNameRepository
 
     @ApplicationScope
     @Binds
-    fun bindStorageItemRepository(impl: StorageItemImpl):AppRepository
+    fun bindStorageItemRepository(impl: StorageItemImpl): StorageItemRepository
 
 
     companion object{
@@ -68,7 +71,5 @@ interface DataModule {
             return AppDataBase.getInstance(application).requestItemDao()
         }
     }
-
-
 
 }

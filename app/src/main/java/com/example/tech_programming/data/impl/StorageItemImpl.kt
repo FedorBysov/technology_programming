@@ -1,25 +1,40 @@
 package com.example.tech_programming.data.impl
 
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
 import com.example.tech_programming.data.db.dao.StorageItemDao
-import com.example.tech_programming.data.db.mapper.StorageItemMapper
-import com.example.tech_programming.domain.AppRepository
+import com.example.tech_programming.data.db.mapper.Mapper
 import com.example.tech_programming.domain.model.StorageItem
+import com.example.tech_programming.domain.repository.StorageItemRepository
+import javax.inject.Inject
 
-class StorageItemImpl(
-    private val mapper: StorageItemMapper,
+class StorageItemImpl @Inject constructor(
+    private val mapper: Mapper,
     private val storageItemDao: StorageItemDao
-) : AppRepository {
+) : StorageItemRepository {
 
     override fun getStorageItemsList(): LiveData<List<StorageItem>> =
-        Transformations.
+        Transformations.map(storageItemDao.getStorageItemsList()){
+            mapper.mapListDbModelToListStorageItemEntity(it)
+        }
 
-    override suspend fun getStorageItem() {}
 
-    override suspend fun addStorageItem() {}
+    override suspend fun getStorageItem(storageItemId: Int): StorageItem {
+        val db = storageItemDao.getStorageItem(storageItemId)
+        return mapper.mapDbModelToStorageItemEntity(db)
+    }
 
-    override suspend fun deleteStorageItem() {}
+    override suspend fun addStorageItem(storageItem: StorageItem) {
+        storageItemDao.addStorageItems(mapper.mapEntityToStorageItemDbModel(storageItem))
+    }
 
-    override suspend fun editStorageItem() {}
+    override suspend fun deleteStorageItem(storageItem: StorageItem) {
+        storageItemDao.deleteStorageItem(storageItem.id)
+    }
+
+    override suspend fun editStorageItem(storageItem: StorageItem) {
+        storageItemDao.addStorageItems(mapper.mapEntityToStorageItemDbModel(storageItem))
+    }
+
+
 }

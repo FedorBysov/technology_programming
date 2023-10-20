@@ -29,7 +29,6 @@ interface ApplicationComponent {
     fun inject(fragment: ShopNameInfoFragment)
     fun inject(fragment: RequestItemFragment)
     fun inject(fragment: RequestShopNameFragment)
-
     fun inject(fragment: StorageItemFragment)
 
 

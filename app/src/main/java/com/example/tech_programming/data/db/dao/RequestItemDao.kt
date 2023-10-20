@@ -16,7 +16,7 @@ interface RequestItemDao {
     fun getRequestItemsList(): LiveData<List<RequestItemDbModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addRequestItem(requestItemDbModel: RequestItemDbModel)
+    suspend fun addRequestItem(requestItemDbModel: RequestItemDbModel):RequestItemDbModel
 
     @Query("DELETE FROM request_items WHERE id = :requestItemID")
     suspend fun deleteRequestItem(requestItemID: Int)
