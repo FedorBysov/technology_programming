@@ -8,7 +8,7 @@ data class StorageItemDbModel (
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val name:String,
-    val quantity: Int
+    val count: Int
 
 
 )

@@ -80,14 +80,14 @@ class Mapper @Inject constructor() {
         StorageItemDbModel(
             storageItem.id,
             storageItem.name,
-            storageItem.quantity
+            storageItem.count
         )
 
     fun mapDbModelToStorageItemEntity(storageItemDbModel: StorageItemDbModel): StorageItem =
         StorageItem(
             storageItemDbModel.id,
             storageItemDbModel.name,
-            storageItemDbModel.quantity
+            storageItemDbModel.count
         )
 
     fun mapListDbModelToListStorageItemEntity(list: List<StorageItemDbModel>) = list.map{
