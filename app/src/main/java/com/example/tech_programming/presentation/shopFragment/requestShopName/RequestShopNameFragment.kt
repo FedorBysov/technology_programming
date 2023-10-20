@@ -1,4 +1,4 @@
-package com.example.tech_programming.presentation.storageItemFragment
+package com.example.tech_programming.presentation.shopFragment.requestShopName
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,10 +11,10 @@ import com.example.tech_programming.R
 
 /**
  * A simple [Fragment] subclass.
- * Use the [StorageItemFragment.newInstance] factory method to
+ * Use the [RequestShopNameFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class StorageItemFragment : Fragment() {
+class RequestShopNameFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -32,7 +32,7 @@ class StorageItemFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_storage_item, container, false)
+        return inflater.inflate(R.layout.fragment_request_shop_name, container, false)
     }
 
     companion object {
@@ -42,12 +42,12 @@ class StorageItemFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment StorageItemFragment.
+         * @return A new instance of fragment RequestShopNameFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            StorageItemFragment().apply {
+            RequestShopNameFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

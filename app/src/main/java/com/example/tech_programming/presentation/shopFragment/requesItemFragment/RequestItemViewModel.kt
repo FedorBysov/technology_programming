@@ -1,4 +1,4 @@
-package com.example.tech_programming.presentation.shopFragment.requestFragment
+package com.example.tech_programming.presentation.shopFragment.requesItemFragment
 
 import androidx.lifecycle.ViewModel
 import javax.inject.Inject

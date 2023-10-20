@@ -1,9 +1,9 @@
 package com.example.tech_programming.di
 
 import androidx.lifecycle.ViewModel
-import com.example.tech_programming.presentation.shopFragment.requestFragment.RequestItemViewModel
-import com.example.tech_programming.presentation.shopFragment.shopItemFragment.ShopItemViewModel
-import com.example.tech_programming.presentation.shopFragment.shopNameFragment.ShopNameViewModel
+import com.example.tech_programming.presentation.shopFragment.requesItemFragment.RequestItemViewModel
+import com.example.tech_programming.presentation.shopFragment.shopItemInfoFragment.ShopItemInfoViewModel
+import com.example.tech_programming.presentation.shopFragment.shopNameInfoFragment.ShopNameInfoViewModel
 import com.example.tech_programming.presentation.storageItemFragment.StorageItemViewModel
 import dagger.Binds
 import dagger.Module
@@ -19,13 +19,13 @@ interface ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(ShopItemViewModel::class)
-    fun bindShopItemViewModel(viewModel: ShopItemViewModel): ViewModel
+    @ViewModelKey(ShopItemInfoViewModel::class)
+    fun bindShopItemViewModel(viewModel: ShopItemInfoViewModel): ViewModel
 
     @Binds
     @IntoMap
-    @ViewModelKey(ShopNameViewModel::class)
-    fun bindShopNameViewModel(viewModel: ShopNameViewModel): ViewModel
+    @ViewModelKey(ShopNameInfoViewModel::class)
+    fun bindShopNameViewModel(viewModel: ShopNameInfoViewModel): ViewModel
 
     @Binds
     @IntoMap
