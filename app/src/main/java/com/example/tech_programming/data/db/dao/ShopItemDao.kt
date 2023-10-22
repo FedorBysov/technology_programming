@@ -1,12 +1,14 @@
 package com.example.tech_programming.data.db.dao
 
 import androidx.lifecycle.LiveData
+import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.tech_programming.data.db.model.ShopItemDbModel
 import com.example.tech_programming.data.db.model.StorageItemDbModel
-
+@Dao
 interface ShopItemDao {
     @Query("SELECT * FROM shop_items")
     fun getShopItemsList(): LiveData<List<ShopItemDbModel>>

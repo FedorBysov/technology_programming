@@ -14,7 +14,7 @@ interface ShopNameDao {
     fun getShopNamesList(): LiveData<List<ShopNameDbModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addShopNameItem(shopNameDbModel: ShopNameDbModel):ShopNameDbModel
+    suspend fun addShopNameItem(shopNameDbModel: ShopNameDbModel)
 
     @Query("DELETE FROM shop_name WHERE id = :shopNameID")
     suspend fun deleteShopNameItem(shopNameID: Int)

@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import org.jetbrains.annotations.NotNull
 
 @Entity(tableName = "request_items", foreignKeys = [ForeignKey(
     entity = ShopNameDbModel::class,
@@ -14,11 +15,14 @@ import androidx.room.PrimaryKey
 data class RequestItemDbModel(
 
     @PrimaryKey(autoGenerate = true)
-    val id:Int,
+    val id:Int=0,
+    @NotNull
     val count:Int,
+    @NotNull
     val name:String,
-
+    @NotNull
     @ColumnInfo(index=true)
     val shopId :Int
+
 
 )

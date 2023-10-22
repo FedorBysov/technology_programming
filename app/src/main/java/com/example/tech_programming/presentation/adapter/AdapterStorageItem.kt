@@ -4,14 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.example.tech_programming.databinding.ItemCardActivBinding
-import com.example.tech_programming.domain.model.RequestItem
+import com.example.tech_programming.domain.model.ShopItem
+import com.example.tech_programming.domain.model.StorageItem
 
-class AdapterRequestItem : ListAdapter<RequestItem, ViewHolder>(RequestItemDiffCallBack()) {
+class AdapterStorageItem: ListAdapter<StorageItem, ViewHolder>(StorageItemDiffCallBack()) {
 
     var count = 0
 
 
-    var onRequestItemClickListener: ((RequestItem) -> Unit)? = null
+    var onStorageItemClickListener: ((StorageItem) -> Unit)? = null
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,7 +30,7 @@ class AdapterRequestItem : ListAdapter<RequestItem, ViewHolder>(RequestItemDiffC
             count.text = requestItem.count.toString()
 
             itemView.setOnClickListener {
-                onRequestItemClickListener?.invoke(requestItem)
+                onStorageItemClickListener?.invoke(requestItem)
             }
 
         }

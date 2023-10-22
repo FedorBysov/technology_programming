@@ -14,7 +14,7 @@
         android:id="@+id/constraintL"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#9E0C0C">
+        android:background="#0D6EAE">
 
         <TextView
             android:id="@+id/textNote"

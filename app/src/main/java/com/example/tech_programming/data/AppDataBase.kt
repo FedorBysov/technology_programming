@@ -15,7 +15,7 @@ import com.example.tech_programming.data.db.model.StorageItemDbModel
 
 @Database(
     entities = [ShopItemDbModel::class, ShopNameDbModel::class, StorageItemDbModel::class, RequestItemDbModel::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class AppDataBase : RoomDatabase() {

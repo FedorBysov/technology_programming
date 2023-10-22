@@ -5,13 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.example.tech_programming.databinding.ItemCardActivBinding
 import com.example.tech_programming.domain.model.RequestItem
+import com.example.tech_programming.domain.model.ShopItem
 
-class AdapterRequestItem : ListAdapter<RequestItem, ViewHolder>(RequestItemDiffCallBack()) {
+class AdapterShopItem : ListAdapter<ShopItem, ViewHolder>(ShopItemDiffCallBack()) {
 
     var count = 0
 
 
-    var onRequestItemClickListener: ((RequestItem) -> Unit)? = null
+    var onShopItemClickListener: ((ShopItem) -> Unit)? = null
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,7 +30,7 @@ class AdapterRequestItem : ListAdapter<RequestItem, ViewHolder>(RequestItemDiffC
             count.text = requestItem.count.toString()
 
             itemView.setOnClickListener {
-                onRequestItemClickListener?.invoke(requestItem)
+                onShopItemClickListener?.invoke(requestItem)
             }
 
         }

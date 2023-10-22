@@ -14,7 +14,7 @@
         android:id="@+id/constraintL"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#9F9E0C0C">
+        android:background="#900D6EAE">
 
         <TextView
             android:id="@+id/textNote"
@@ -34,7 +34,7 @@
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="@+id/constraintL"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="DNS" />
+            tools:text="Пятерочка" />
 
         <TextView
             android:id="@+id/count"
@@ -48,7 +48,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textNote"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="1" />
+            tools:text="89898" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
