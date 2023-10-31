@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+
 }
 
 android {
@@ -53,6 +54,7 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
 
+
     val room_version = "2.4.3"
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
@@ -65,5 +67,9 @@ dependencies {
 
     implementation ("com.google.dagger:dagger:2.35.1")
     kapt ("com.google.dagger:dagger-compiler:2.35.1")
+
+
+//    implementation("androidx.navigation:navigation-fragment-ktx:2.3.0")
+//    implementation("androidx.navigation:navigation-ui-ktx:2.3.0")
 
 }

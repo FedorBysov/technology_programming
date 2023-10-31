@@ -15,6 +15,8 @@ class AdapterStorageItem: ListAdapter<StorageItem, ViewHolder>(StorageItemDiffCa
     var onStorageItemClickListener: ((StorageItem) -> Unit)? = null
 
 
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
             ItemCardActivBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -32,6 +34,7 @@ class AdapterStorageItem: ListAdapter<StorageItem, ViewHolder>(StorageItemDiffCa
             itemView.setOnClickListener {
                 onStorageItemClickListener?.invoke(requestItem)
             }
+            
 
         }
     }

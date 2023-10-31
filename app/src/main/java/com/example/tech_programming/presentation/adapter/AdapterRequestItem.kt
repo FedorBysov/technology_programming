@@ -13,6 +13,9 @@ class AdapterRequestItem : ListAdapter<RequestItem, ViewHolder>(RequestItemDiffC
 
     var onRequestItemClickListener: ((RequestItem) -> Unit)? = null
 
+    var onRequestItemLongClickListener: ((RequestItem) -> Unit)? = null
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
@@ -27,6 +30,11 @@ class AdapterRequestItem : ListAdapter<RequestItem, ViewHolder>(RequestItemDiffC
 
             text.text = requestItem.name
             count.text = requestItem.count.toString()
+
+            itemView.setOnLongClickListener{
+                onRequestItemLongClickListener?.invoke(requestItem)
+                true
+            }
 
             itemView.setOnClickListener {
                 onRequestItemClickListener?.invoke(requestItem)

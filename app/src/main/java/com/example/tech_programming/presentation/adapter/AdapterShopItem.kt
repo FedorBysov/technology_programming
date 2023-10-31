@@ -13,6 +13,8 @@ class AdapterShopItem : ListAdapter<ShopItem, ViewHolder>(ShopItemDiffCallBack()
 
 
     var onShopItemClickListener: ((ShopItem) -> Unit)? = null
+    var onShopItemLongClickListener: ((ShopItem) -> Unit)? = null
+
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -31,6 +33,11 @@ class AdapterShopItem : ListAdapter<ShopItem, ViewHolder>(ShopItemDiffCallBack()
 
             itemView.setOnClickListener {
                 onShopItemClickListener?.invoke(requestItem)
+            }
+
+            itemView.setOnLongClickListener {
+                onShopItemLongClickListener?.invoke(requestItem)
+                true
             }
 
         }

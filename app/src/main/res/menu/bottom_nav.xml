@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="@string/repository"
+        android:id="@+id/storage"
+        android:icon="@drawable/storage"/>
+    <item android:title="@string/shops"
+        android:id="@+id/shops"
+        android:icon="@drawable/shaurma"/>
+    <item android:title="@string/required"
+        android:id="@+id/required"
+        android:icon="@drawable/shaurma_plus"/>
+</menu>

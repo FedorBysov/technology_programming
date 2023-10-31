@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class AddStorageItemUseCase @Inject constructor(private val storageItemRepository: StorageItemRepository) {
 
-    suspend fun AddStorageItemUseCase(storageItem: StorageItem){
+    suspend fun addStorageItemUseCase(storageItem: StorageItem){
         return storageItemRepository.addStorageItem(storageItem)
     }
 }
