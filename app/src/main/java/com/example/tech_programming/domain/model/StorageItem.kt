@@ -1,9 +1,10 @@
 package com.example.tech_programming.domain.model
 
 data class StorageItem (
-    var id: Int = Unknown_ID,
+
     val name:String,
-    val count: Int
+    val count: Int,
+    var id: Int = Unknown_ID
 )
 {
     companion object{

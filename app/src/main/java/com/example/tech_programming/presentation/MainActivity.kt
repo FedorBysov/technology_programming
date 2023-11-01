@@ -1,10 +1,15 @@
 package com.example.tech_programming.presentation
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.example.tech_programming.R
 import com.example.tech_programming.databinding.ActivityMainBinding
+import com.example.tech_programming.presentation.storageItemFragment.StorageEditAddFragment
+import com.example.tech_programming.presentation.storageItemFragment.StorageItemListFragment
 
-class MainActivity : AppCompatActivity(){
+class MainActivity : AppCompatActivity(), StorageEditAddFragment.OnEditingFinishedListener{
 
     private lateinit var binding: ActivityMainBinding
 
@@ -14,16 +19,25 @@ class MainActivity : AppCompatActivity(){
         setContentView(binding.root)
 
 
-
+        fragmentTransactions(StorageItemListFragment())
 
         binding.bottomBar.setOnItemSelectedListener {
             when (it.itemId) {
-
+                R.id.storage->fragmentTransactions(StorageItemListFragment())
                 else -> {}
             }
             true
         }
 
     }
-
+    fun fragmentTransactions(fragment: Fragment){
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+    override fun onEditingFinished() {
+        Toast.makeText(this@MainActivity, "Success", Toast.LENGTH_SHORT).show()
+        supportFragmentManager.popBackStack()
+    }
 }

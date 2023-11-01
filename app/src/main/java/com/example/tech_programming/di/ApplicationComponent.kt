@@ -1,10 +1,8 @@
 package com.example.tech_programming.di
 
 import android.app.Application
-import com.example.tech_programming.presentation.MainActivity
-import com.example.tech_programming.presentation.storageItemFragment.StorageEditAddActivity
 import com.example.tech_programming.presentation.storageItemFragment.StorageEditAddFragment
-import com.example.tech_programming.presentation.storageItemFragment.StorageItemListActivity
+import com.example.tech_programming.presentation.storageItemFragment.StorageItemListFragment
 import dagger.BindsInstance
 import dagger.Component
 
@@ -22,7 +20,7 @@ interface ApplicationComponent {
         ):ApplicationComponent
     }
 
-    fun inject(activity: StorageItemListActivity)
+    fun inject(fragment: StorageItemListFragment)
     fun inject(fragment: StorageEditAddFragment)
 
 

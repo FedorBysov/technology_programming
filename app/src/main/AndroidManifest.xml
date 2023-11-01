@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Tech_programming"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.storageItemFragment.StorageItemListActivity"
+            android:name=".presentation.storageItemFragment.StorageItemListFragment"
             android:exported="false"
             android:label="@string/title_activity_storage_item_list"
             android:theme="@style/Theme.Tech_programming" />

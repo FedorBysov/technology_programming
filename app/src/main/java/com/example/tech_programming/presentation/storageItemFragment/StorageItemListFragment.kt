@@ -1,9 +1,11 @@
 package com.example.tech_programming.presentation.storageItemFragment
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -15,9 +17,11 @@ import com.example.tech_programming.presentation.ViewModelFactory
 import com.example.tech_programming.presentation.adapter.AdapterStorageItem
 import javax.inject.Inject
 
-class StorageItemListActivity:AppCompatActivity() , StorageEditAddFragment.OnEditingFinishedListener {
+class StorageItemListFragment:Fragment(), StorageEditAddFragment.OnEditingFinishedListener {
 
-    private lateinit var binding: ActivityStorageItemListBinding
+    private lateinit var _binding: ActivityStorageItemListBinding
+    private val binding
+        get() = _binding!!
     private lateinit var viewModel: StorageItemListViewModel
     private lateinit var mainAdapter: AdapterStorageItem
 
@@ -25,23 +29,41 @@ class StorageItemListActivity:AppCompatActivity() , StorageEditAddFragment.OnEdi
     lateinit var viewModelFactory: ViewModelFactory
 
     private val component by lazy{
-        (application as AppApplication).component
+        (requireActivity().application as AppApplication).component
     }
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onAttach(context: Context) {
         component.inject(this)
 
+        super.onAttach(context)
+
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityStorageItemListBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = ActivityStorageItemListBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        super.onCreate(savedInstanceState)
+
         viewModel = ViewModelProvider(this, viewModelFactory)[StorageItemListViewModel::class.java]
 
 
         val buttonAddItem = binding.btnAdd
         buttonAddItem.setOnClickListener {
-                val intent = StorageEditAddActivity.newIntentStorageItemActivity(this)
-                startActivity(intent)
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment, StorageEditAddFragment.newInstanceAdd())
+                .addToBackStack(null)
+                .commit()
         }
 
         setupAdapter()
@@ -49,26 +71,12 @@ class StorageItemListActivity:AppCompatActivity() , StorageEditAddFragment.OnEdi
         setupItemTouchHelper()
 
 
-        viewModel.storageList.observe(this) {
+        viewModel.storageList.observe(requireActivity()) {
             Log.d("TEST_LOADING_LIVE_DATA", "${it.toString()}")
             mainAdapter.submitList(it)
         }
 
     }
-
-    override fun finishEditing() {
-        Toast.makeText(this@StorageItemListActivity, "Successful!!!", Toast.LENGTH_SHORT).show()
-        supportFragmentManager.popBackStack()
-    }
-
-    private fun launchFragment(fragment: Fragment) {
-        supportFragmentManager.popBackStack()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.storage_item_container, fragment)
-            .addToBackStack(null)
-            .commit()
-    }
-
 
     private fun setupAdapter() {
         mainAdapter = AdapterStorageItem()
@@ -109,11 +117,19 @@ class StorageItemListActivity:AppCompatActivity() , StorageEditAddFragment.OnEdi
 
     private fun setupClick() {
         mainAdapter.onStorageItemClickListener= {
-            val intent = StorageEditAddActivity.editIntentStorageItemActivity(this, it.id)
-            startActivity(intent)
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment, StorageEditAddFragment.newInstanceEdit(it.id))
+                .addToBackStack(null)
+                .commit()
         }
     }
 
+companion object {
+}
+
+    override fun onEditingFinished() {
+        requireActivity().finish()
+    }
 
 
 }

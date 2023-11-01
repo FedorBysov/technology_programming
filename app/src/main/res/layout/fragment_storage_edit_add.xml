@@ -55,11 +55,11 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#343456"
+        android:backgroundTint="#4E8CEA"
         android:text="SAVE"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"

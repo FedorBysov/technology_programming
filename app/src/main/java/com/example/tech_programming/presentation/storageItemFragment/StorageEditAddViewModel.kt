@@ -12,13 +12,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class StorageEditAddViewModel @Inject constructor(
-    private val getShopItemUseCase : GetStorageItemUseCase,
-    private val addShopItemUseCase : AddStorageItemUseCase,
-    private val editShopItemUseCase : EditStorageItemListUseCase
+    private val getStorageItemUseCase : GetStorageItemUseCase,
+    private val addStorageItemUseCase : AddStorageItemUseCase,
+    private val editStorageItemUseCase : EditStorageItemListUseCase
 ) : ViewModel() {
-
-
-//    private val scope = CoroutineScope(Dispatchers.IO)
 
 
     private val _errorInputName = MutableLiveData<Boolean>()
@@ -39,7 +36,7 @@ class StorageEditAddViewModel @Inject constructor(
 
     fun getStorageItem(storageItem: Int) {
         viewModelScope.launch {
-            val item = getShopItemUseCase.getStorageItemUseCase(storageItem)
+            val item = getStorageItemUseCase.getStorageItemUseCase(storageItem)
             _storageItem.postValue(item)
         }
 
@@ -48,10 +45,11 @@ class StorageEditAddViewModel @Inject constructor(
     fun addStorageItem(inputName: String?, inputCount: String?) {
         val name = validateName(inputName)
         val count = validateCount(inputCount)
-        if (validateInput(name, count)) {
+        val fieldsValid = validateInput(name, count)
+        if (fieldsValid) {
             viewModelScope.launch {
-                val storageItem = StorageItem(name = name, count = count)
-                addShopItemUseCase.addStorageItemUseCase(storageItem)
+                val storageItem = StorageItem(name, count)
+                addStorageItemUseCase.addStorageItemUseCase(storageItem)
                 finishWork()
             }
         }
@@ -63,8 +61,8 @@ class StorageEditAddViewModel @Inject constructor(
         if (validateInput(name, count)) {
             viewModelScope.launch {
                 _storageItem.value?.let {
-                    val item = it.copy(name = name, count = count)
-                    editShopItemUseCase.editStorageItemListUseCase(item)
+                    val item = it.copy(name,  count)
+                    editStorageItemUseCase.editStorageItemListUseCase(item)
                     finishWork()
                 }
 

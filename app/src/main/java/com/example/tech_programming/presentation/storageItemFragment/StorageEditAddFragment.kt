@@ -4,11 +4,11 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
 import androidx.lifecycle.ViewModelProvider
 import com.example.tech_programming.R
@@ -22,9 +22,11 @@ import javax.inject.Inject
 
 class StorageEditAddFragment : Fragment() {
 
-    private lateinit var onEditingFinishedListener: OnEditingFinishedListener
 
     private lateinit var viewModel: StorageEditAddViewModel
+    private lateinit var onEditingFinishedListener: OnEditingFinishedListener
+
+
     private var _binding: FragmentStorageEditAddBinding? = null
     private val binding
         get() = _binding!!
@@ -36,7 +38,6 @@ class StorageEditAddFragment : Fragment() {
     private lateinit var tilCount: TextInputLayout
     private lateinit var etName: EditText
     private lateinit var etCount: EditText
-    private lateinit var buttonSave: Button
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -47,12 +48,12 @@ class StorageEditAddFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         component.inject(this)
-
         super.onAttach(context)
+
         if (context is OnEditingFinishedListener) {
             onEditingFinishedListener = context
         } else {
-            throw RuntimeException("Activity need implement onEditingFinishedListener")
+            throw RuntimeException("Activity must implement OnEditingFinishedListener")
         }
     }
 
@@ -104,8 +105,8 @@ class StorageEditAddFragment : Fragment() {
         })
 
         when (screenMode) {
-            MODE_EDIT -> launchEdit()
-            MODE_ADD -> launchAdd()
+            MODE_EDIT_STORAGE_ITEM -> launchEdit()
+            MODE_ADD_STORAGE_ITEM -> launchAdd()
         }
         viewModel.errorInputCount.observe(viewLifecycleOwner) {
             val message = if (it) {
@@ -124,10 +125,8 @@ class StorageEditAddFragment : Fragment() {
             }
             tilName.error = message
         }
+        observeViewModel()
 
-        viewModel.shouldCloseScreen.observe(viewLifecycleOwner) {
-            onEditingFinishedListener.finishEditing()
-        }
 
     }
 
@@ -137,35 +136,40 @@ class StorageEditAddFragment : Fragment() {
             etName.setText(it.name)
             etCount.setText(it.count.toString())
         }
-        buttonSave.setOnClickListener {
+        binding.btnSave.setOnClickListener {
             viewModel.editStorageItem(etName.text?.toString(), etCount.text?.toString())
         }
     }
 
+    private fun observeViewModel() {
+        viewModel.shouldCloseScreen.observe(viewLifecycleOwner) {
+            onEditingFinishedListener.onEditingFinished()
+        }
+    }
+
     private fun launchAdd() {
-        buttonSave.setOnClickListener {
+        binding.btnSave.setOnClickListener {
+            Log.d("asdasdasd", "clicked")
             viewModel.addStorageItem(etName.text?.toString(), etCount.text?.toString())
         }
     }
 
     private fun parserMetod() {
+
         val args = requireArguments()
-        if (!args.containsKey(EXTRA_SCREEN_MODE)) {
-            throw RuntimeException("Param Screen Mode is Absent")
-        }
-        val mode = args.getString(EXTRA_SCREEN_MODE)
-        if (mode != MODE_EDIT && mode != MODE_ADD) {
+
+        val mode = args.getString(MODE_STORAGE_ITEM)
+        if (mode != MODE_EDIT_STORAGE_ITEM && mode != MODE_ADD_STORAGE_ITEM) {
             throw RuntimeException("UNKNOWN screen $mode")
         }
         screenMode = mode
-        if (screenMode == MODE_EDIT) {
-            if (!args.containsKey(EXTRA_SHOP_ITEM_ID)) {
+
+        if (screenMode == MODE_EDIT_STORAGE_ITEM) {
+            if (!args.containsKey(EXTRA_STORAGE_ITEM_ID)) {
                 throw RuntimeException("Param Shop item id is absent")
             }
-            shopItemId = args.getInt(EXTRA_SHOP_ITEM_ID, StorageItem.Unknown_ID)
-
+            shopItemId = args.getInt(EXTRA_STORAGE_ITEM_ID, StorageItem.Unknown_ID)
         }
-
     }
 
 
@@ -174,38 +178,42 @@ class StorageEditAddFragment : Fragment() {
         tilCount = binding.tilCount
         etCount = binding.etCount
         etName = binding.etName
-        buttonSave = binding.btnSave
     }
 
     interface OnEditingFinishedListener {
-        fun finishEditing()
+        fun onEditingFinished()
     }
 
+
     companion object {
-        private const val EXTRA_SCREEN_MODE = "extra_mode"
-        private const val EXTRA_SHOP_ITEM_ID = "extra_shop_item_id"
-        private const val MODE_EDIT = "edit_mode"
-        private const val MODE_ADD = "add_mode"
+        private const val EXTRA_STORAGE_ITEM_ID = "extra_shop_item_id"
 
         private const val MODE_UNKNOWN = ""
 
 
-        fun newIntentAddFragment(): StorageEditAddFragment {
+        private const val MODE_STORAGE_ITEM = "ModeStorageItem"
+        private const val MODE_EDIT_STORAGE_ITEM = "edit_mode_StorageItem"
+        private const val MODE_ADD_STORAGE_ITEM = "add_mode_StorageItem"
+
+
+        fun newInstanceAdd(): StorageEditAddFragment {
             return StorageEditAddFragment().apply {
                 arguments = Bundle().apply {
-                    putString(EXTRA_SCREEN_MODE, MODE_ADD)
+                    putSerializable(MODE_STORAGE_ITEM, MODE_ADD_STORAGE_ITEM)
                 }
             }
         }
 
-        fun intentEditFragment(shopItemId: Int): StorageEditAddFragment {
+        fun newInstanceEdit(storageId: Int): StorageEditAddFragment {
             return StorageEditAddFragment().apply {
                 arguments = Bundle().apply {
-                    putString(EXTRA_SCREEN_MODE, MODE_EDIT)
-                    putInt(EXTRA_SHOP_ITEM_ID, shopItemId)
+                    putSerializable(MODE_STORAGE_ITEM, MODE_EDIT_STORAGE_ITEM)
+                    putSerializable(EXTRA_STORAGE_ITEM_ID, storageId)
                 }
             }
         }
     }
 
 }
+
+
