@@ -1,29 +1,32 @@
-package com.example.tech_programming.presentation.storageItemFragment
+package com.example.tech_programming.presentation.shopFragment
 
 import android.content.Context
+import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tech_programming.R
-import com.example.tech_programming.databinding.FragmentStorageItemListBinding
+import com.example.tech_programming.databinding.FragmentShopNameBinding
 import com.example.tech_programming.presentation.AppApplication
 import com.example.tech_programming.presentation.ViewModelFactory
+import com.example.tech_programming.presentation.adapter.AdapterShopName
 import com.example.tech_programming.presentation.adapter.AdapterStorageItem
+import com.example.tech_programming.presentation.storageItemFragment.StorageEditAddFragment
 import javax.inject.Inject
 
-class StorageItemListFragment:Fragment(), StorageEditAddFragment.OnEditingFinishedListener {
+class ShopNameListFragment : Fragment() , ShopNameAddFragment.OnEditingFinishedListener {
 
-    private lateinit var _binding: FragmentStorageItemListBinding
+
+    private lateinit var _binding: FragmentShopNameBinding
     private val binding
         get() = _binding!!
-    private lateinit var viewModel: StorageItemListViewModel
-    private lateinit var mainAdapter: AdapterStorageItem
+    private lateinit var viewModel: ShopNameListViewModel
+    private lateinit var mainAdapter: AdapterShopName
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -47,7 +50,7 @@ class StorageItemListFragment:Fragment(), StorageEditAddFragment.OnEditingFinish
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentStorageItemListBinding.inflate(layoutInflater)
+        _binding = FragmentShopNameBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -55,13 +58,13 @@ class StorageItemListFragment:Fragment(), StorageEditAddFragment.OnEditingFinish
 
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProvider(this, viewModelFactory)[StorageItemListViewModel::class.java]
+        viewModel = ViewModelProvider(this, viewModelFactory)[ShopNameListViewModel::class.java]
 
 
         val buttonAddItem = binding.btnAdd
         buttonAddItem.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment, StorageEditAddFragment.newInstanceAdd())
+                .replace(R.id.fragment, ShopNameAddFragment.newInstanceAdd())
                 .addToBackStack(null)
                 .commit()
         }
@@ -71,7 +74,7 @@ class StorageItemListFragment:Fragment(), StorageEditAddFragment.OnEditingFinish
         setupItemTouchHelper()
 
 
-        viewModel.storageList.observe(requireActivity()) {
+        viewModel.shopNameList.observe(requireActivity()) {
             Log.d("TEST_LOADING_LIVE_DATA", "${it.toString()}")
             mainAdapter.submitList(it)
         }
@@ -79,7 +82,7 @@ class StorageItemListFragment:Fragment(), StorageEditAddFragment.OnEditingFinish
     }
 
     private fun setupAdapter() {
-        mainAdapter = AdapterStorageItem()
+        mainAdapter = AdapterShopName()
         binding.listRV.adapter = mainAdapter
         binding.listRV.recycledViewPool.setMaxRecycledViews(
             AdapterStorageItem.ENABLED_VIEW,
@@ -106,7 +109,7 @@ class StorageItemListFragment:Fragment(), StorageEditAddFragment.OnEditingFinish
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val item = mainAdapter.currentList[viewHolder.adapterPosition]
-                viewModel.deleteStorageList(item)
+                viewModel.deleteShopNameItem(item)
             }
         }
         val itemTouchHelper = ItemTouchHelper(callback)
@@ -116,15 +119,16 @@ class StorageItemListFragment:Fragment(), StorageEditAddFragment.OnEditingFinish
 
 
     private fun setupClick() {
-        mainAdapter.onStorageItemClickListener= {
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment, StorageEditAddFragment.newInstanceEdit(it.id))
-                .addToBackStack(null)
-                .commit()
-        }
+//        mainAdapter.onShopNameClickListener= {
+//            requireActivity().supportFragmentManager.beginTransaction()
+//                .replace(R.id.fragment, StorageEditAddFragment.newInstanceEdit(it.id))
+//                .addToBackStack(null)
+//                .commit()
+//        }
     }
 
     override fun onEditingFinished() {
         requireActivity().finish()
     }
+
 }

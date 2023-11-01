@@ -51,8 +51,12 @@ dependencies {
 
     implementation ("androidx.databinding:databinding-runtime:7.4.2")
 
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
+
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
 
 
     val room_version = "2.4.3"
@@ -69,7 +73,5 @@ dependencies {
     kapt ("com.google.dagger:dagger-compiler:2.35.1")
 
 
-//    implementation("androidx.navigation:navigation-fragment-ktx:2.3.0")
-//    implementation("androidx.navigation:navigation-ui-ktx:2.3.0")
 
 }

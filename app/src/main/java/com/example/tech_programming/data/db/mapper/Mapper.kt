@@ -66,8 +66,9 @@ class Mapper @Inject constructor() {
 
     fun mapDbModelToShopNameEntity(shopNameDbModel: ShopNameDbModel): ShopName =
         ShopName(
-            shopNameDbModel.id,
-            shopNameDbModel.name
+            shopNameDbModel.name,
+            shopNameDbModel.id
+
         )
 
     fun mapListDbModelToListShopNameEntity(list: List<ShopNameDbModel>) = list.map{
