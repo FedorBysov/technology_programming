@@ -1,6 +1,8 @@
 package com.example.tech_programming.di
 
 import androidx.lifecycle.ViewModel
+import com.example.tech_programming.presentation.requestFragment.needList.NeedAddEditRequestViewModel
+import com.example.tech_programming.presentation.requestFragment.needList.NeedListRequestViewModel
 import com.example.tech_programming.presentation.shopFragment.ShopNameAddViewModel
 import com.example.tech_programming.presentation.shopFragment.ShopNameListViewModel
 import com.example.tech_programming.presentation.storageItemFragment.StorageEditAddViewModel
@@ -31,5 +33,15 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(ShopNameAddViewModel::class)
     fun bindShopNameAddViewModel(viewModel: ShopNameAddViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(NeedAddEditRequestViewModel::class)
+    fun bindNeedAddEditRequestViewModel(viewModel: NeedAddEditRequestViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(NeedListRequestViewModel::class)
+    fun bindNeedListRequestViewModel(viewModel: NeedListRequestViewModel): ViewModel
 
 }

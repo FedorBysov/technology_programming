@@ -24,10 +24,11 @@ class Mapper @Inject constructor() {
 
     fun mapDbModelToRequestItemEntity(requestItemDbModel: RequestItemDbModel): RequestItem =
         RequestItem(
-            requestItemDbModel.id,
+
             requestItemDbModel.count,
             requestItemDbModel.name,
-            requestItemDbModel.shopId
+            requestItemDbModel.shopId,
+            requestItemDbModel.id
         )
 
     fun mapListDbModelToListRequestItemEntity(list: List<RequestItemDbModel>) = list.map{

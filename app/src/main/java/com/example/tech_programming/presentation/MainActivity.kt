@@ -6,14 +6,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.tech_programming.R
 import com.example.tech_programming.databinding.ActivityMainBinding
-import com.example.tech_programming.presentation.requestFragment.RequestShopNameFragment
+import com.example.tech_programming.presentation.requestFragment.AllRequestShopNameFragment
+import com.example.tech_programming.presentation.requestFragment.needList.NeedAddEditRequestFragment
 import com.example.tech_programming.presentation.shopFragment.ShopNameAddFragment
 import com.example.tech_programming.presentation.shopFragment.ShopNameListFragment
 import com.example.tech_programming.presentation.storageItemFragment.StorageEditAddFragment
 import com.example.tech_programming.presentation.storageItemFragment.StorageItemListFragment
 
 class MainActivity : AppCompatActivity(), StorageEditAddFragment.OnEditingFinishedListener,
-    ShopNameAddFragment.OnEditingFinishedListener {
+    ShopNameAddFragment.OnEditingFinishedListener, NeedAddEditRequestFragment.OnEditingFinishedListener {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -29,7 +30,7 @@ class MainActivity : AppCompatActivity(), StorageEditAddFragment.OnEditingFinish
             when (it.itemId) {
                 R.id.storage -> fragmentTransactions(StorageItemListFragment())
                 R.id.shops -> fragmentTransactions(ShopNameListFragment())
-                R.id.required -> fragmentTransactions(RequestShopNameFragment())
+                R.id.required -> fragmentTransactions(AllRequestShopNameFragment())
                 else -> {}
             }
             true

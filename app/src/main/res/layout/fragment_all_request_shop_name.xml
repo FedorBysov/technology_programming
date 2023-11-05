@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presentation.shopFragment.ShopNameListFragment">
-
+    tools:context=".presentation.requestFragment.AllRequestShopNameFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -23,23 +22,6 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/item_card_activ" />
 
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btn_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="32dp"
-            android:clickable="true"
-            android:contentDescription="add new shop item"
-            android:focusable="true"
-            android:src="@drawable/add"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </FrameLayout>

@@ -1,7 +1,9 @@
 package com.example.tech_programming.di
 
 import android.app.Application
-import com.example.tech_programming.presentation.requestFragment.RequestShopNameFragment
+import com.example.tech_programming.presentation.requestFragment.AllRequestShopNameFragment
+import com.example.tech_programming.presentation.requestFragment.needList.NeedAddEditRequestFragment
+import com.example.tech_programming.presentation.requestFragment.needList.NeedListRequestFragment
 import com.example.tech_programming.presentation.shopFragment.ShopNameAddFragment
 import com.example.tech_programming.presentation.shopFragment.ShopNameListFragment
 import com.example.tech_programming.presentation.storageItemFragment.StorageEditAddFragment
@@ -30,7 +32,12 @@ interface ApplicationComponent {
 
     fun inject(fragment: ShopNameAddFragment)
 
-    fun inject(fragment: RequestShopNameFragment)
+    fun inject(fragment: AllRequestShopNameFragment)
+
+    fun inject(fragment: NeedListRequestFragment)
+
+    fun inject(fragment: NeedAddEditRequestFragment)
+
 
 
 

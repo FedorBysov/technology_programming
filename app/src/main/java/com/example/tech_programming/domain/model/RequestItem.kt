@@ -8,12 +8,12 @@ import androidx.room.PrimaryKey
 
 data class RequestItem(
 
-    val id: Int = Unknown_ID,
+
     val count: Int,
     val name: String,
 
-    val shopId: Int
-
+    val shopId: Int,
+    val id: Int = Unknown_ID
 
 ) {
     companion object{
