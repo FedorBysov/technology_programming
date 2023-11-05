@@ -1,4 +1,4 @@
-package com.example.tech_programming.presentation.requestFragment.needList
+package com.example.tech_programming.presentation.requestFragment.needRequestList
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

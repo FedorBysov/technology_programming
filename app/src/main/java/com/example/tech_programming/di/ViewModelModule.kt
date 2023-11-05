@@ -1,10 +1,12 @@
 package com.example.tech_programming.di
 
 import androidx.lifecycle.ViewModel
-import com.example.tech_programming.presentation.requestFragment.needList.NeedAddEditRequestViewModel
-import com.example.tech_programming.presentation.requestFragment.needList.NeedListRequestViewModel
-import com.example.tech_programming.presentation.shopFragment.ShopNameAddViewModel
-import com.example.tech_programming.presentation.shopFragment.ShopNameListViewModel
+import com.example.tech_programming.presentation.requestFragment.needRequestList.NeedAddEditRequestViewModel
+import com.example.tech_programming.presentation.requestFragment.needRequestList.NeedListRequestViewModel
+import com.example.tech_programming.presentation.shopNameFragment.ShopNameAddEditViewModel
+import com.example.tech_programming.presentation.shopNameFragment.ShopNameListViewModel
+import com.example.tech_programming.presentation.shopItemFragment.NeedAddEditShopItemViewModel
+import com.example.tech_programming.presentation.shopItemFragment.NeedListShopItemViewModel
 import com.example.tech_programming.presentation.storageItemFragment.StorageEditAddViewModel
 import com.example.tech_programming.presentation.storageItemFragment.StorageItemListViewModel
 import dagger.Binds
@@ -31,8 +33,8 @@ interface ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(ShopNameAddViewModel::class)
-    fun bindShopNameAddViewModel(viewModel: ShopNameAddViewModel): ViewModel
+    @ViewModelKey(ShopNameAddEditViewModel::class)
+    fun bindShopNameAddEditViewModel(viewModel: ShopNameAddEditViewModel): ViewModel
 
     @Binds
     @IntoMap
@@ -44,4 +46,13 @@ interface ViewModelModule {
     @ViewModelKey(NeedListRequestViewModel::class)
     fun bindNeedListRequestViewModel(viewModel: NeedListRequestViewModel): ViewModel
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(NeedAddEditShopItemViewModel::class)
+    fun bindNeedAddEditShopItemViewModel(viewModel: NeedAddEditShopItemViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(NeedListShopItemViewModel::class)
+    fun bindNeedListShopItemViewModel(viewModel: NeedListShopItemViewModel): ViewModel
 }

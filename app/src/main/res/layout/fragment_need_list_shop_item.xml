@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presentation.shopNameFragment.ShopNameListFragment">
+    tools:context=".presentation.shopItemFragment.NeedListShopItemFragment">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -38,8 +38,6 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
 
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </FrameLayout>

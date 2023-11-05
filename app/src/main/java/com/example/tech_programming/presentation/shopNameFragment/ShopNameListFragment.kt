@@ -1,4 +1,4 @@
-package com.example.tech_programming.presentation.requestFragment.needList
+package com.example.tech_programming.presentation.shopNameFragment
 
 import android.content.Context
 import androidx.lifecycle.ViewModelProvider
@@ -11,23 +11,22 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tech_programming.R
-import com.example.tech_programming.databinding.FragmentNeedListRequestBinding
+import com.example.tech_programming.databinding.FragmentShopNameBinding
 import com.example.tech_programming.presentation.AppApplication
 import com.example.tech_programming.presentation.ViewModelFactory
-import com.example.tech_programming.presentation.adapter.AdapterRequestItem
+import com.example.tech_programming.presentation.adapter.AdapterShopName
 import com.example.tech_programming.presentation.adapter.AdapterStorageItem
-import com.example.tech_programming.presentation.storageItemFragment.StorageEditAddFragment
+import com.example.tech_programming.presentation.shopItemFragment.NeedListShopItemFragment
 import javax.inject.Inject
 
-class NeedListRequestFragment : Fragment(), NeedAddEditRequestFragment.OnEditingFinishedListener{
+class ShopNameListFragment : Fragment() , ShopNameAddEditFragment.OnEditingFinishedListener {
 
-    private lateinit var _binding: FragmentNeedListRequestBinding
+
+    private lateinit var _binding: FragmentShopNameBinding
     private val binding
         get() = _binding!!
-    private lateinit var viewModel: NeedListRequestViewModel
-    private lateinit var mainAdapter: AdapterRequestItem
-
-    private var shopId:Int = 0
+    private lateinit var viewModel: ShopNameListViewModel
+    private lateinit var mainAdapter: AdapterShopName
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -45,21 +44,13 @@ class NeedListRequestFragment : Fragment(), NeedAddEditRequestFragment.OnEditing
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        parseMetod()
-    }
-
-    private fun parseMetod() {
-        val args = requireArguments()
-
-        shopId = args.getInt(NeedListRequestFragment.MODE_REQUEST_LIST)
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentNeedListRequestBinding.inflate(layoutInflater)
+        _binding = FragmentShopNameBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -67,23 +58,24 @@ class NeedListRequestFragment : Fragment(), NeedAddEditRequestFragment.OnEditing
 
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProvider(this, viewModelFactory)[NeedListRequestViewModel::class.java]
+        viewModel = ViewModelProvider(this, viewModelFactory)[ShopNameListViewModel::class.java]
 
 
         val buttonAddItem = binding.btnAdd
         buttonAddItem.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment, NeedAddEditRequestFragment.newInstanceAdd(shopId))
+                .replace(R.id.fragment, ShopNameAddEditFragment.newInstanceAdd())
                 .addToBackStack(null)
                 .commit()
         }
 
         setupAdapter()
-        setupClick(shopId)
-        setupItemTouchHelper(shopId)
+        setupClick()
+        setupLongClickListener()
+        setupItemTouchHelper()
 
 
-        viewModel.requestList(shopId).observe(requireActivity()) {
+        viewModel.shopNameList.observe(requireActivity()) {
             Log.d("TEST_LOADING_LIVE_DATA", "${it.toString()}")
             mainAdapter.submitList(it)
         }
@@ -91,7 +83,7 @@ class NeedListRequestFragment : Fragment(), NeedAddEditRequestFragment.OnEditing
     }
 
     private fun setupAdapter() {
-        mainAdapter = AdapterRequestItem()
+        mainAdapter = AdapterShopName()
         binding.listRV.adapter = mainAdapter
         binding.listRV.recycledViewPool.setMaxRecycledViews(
             AdapterStorageItem.ENABLED_VIEW,
@@ -103,7 +95,7 @@ class NeedListRequestFragment : Fragment(), NeedAddEditRequestFragment.OnEditing
         )
     }
 
-    private fun setupItemTouchHelper(shopId: Int) {
+    private fun setupItemTouchHelper() {
         val callback = object : ItemTouchHelper.SimpleCallback(
             0,
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
@@ -118,7 +110,7 @@ class NeedListRequestFragment : Fragment(), NeedAddEditRequestFragment.OnEditing
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val item = mainAdapter.currentList[viewHolder.adapterPosition]
-                viewModel.deleteStorageList(item, shopId)
+                viewModel.deleteShopNameItem(item)
             }
         }
         val itemTouchHelper = ItemTouchHelper(callback)
@@ -126,11 +118,19 @@ class NeedListRequestFragment : Fragment(), NeedAddEditRequestFragment.OnEditing
     }
 
 
-
-    private fun setupClick(shopId: Int) {
-        mainAdapter.onRequestItemClickListener= {
+    private fun setupLongClickListener(){
+        mainAdapter.onShopNameLongClickListener={
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment, NeedAddEditRequestFragment.newInstanceEdit(it.id, shopId))
+                .replace(R.id.fragment, ShopNameAddEditFragment.newInstanceEdit(it.id))
+                .addToBackStack(null)
+                .commit()
+        }
+    }
+
+    private fun setupClick() {
+        mainAdapter.onShopNameClickListener= {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment, NeedListShopItemFragment.newInstance(it.id))
                 .addToBackStack(null)
                 .commit()
         }
@@ -138,21 +138,6 @@ class NeedListRequestFragment : Fragment(), NeedAddEditRequestFragment.OnEditing
 
     override fun onEditingFinished() {
         requireActivity().finish()
-    }
-
-    companion object {
-
-
-        private const val MODE_REQUEST_LIST = "ModeRequestList"
-
-
-        fun newInstance(shopId:Int): NeedListRequestFragment {
-            return NeedListRequestFragment().apply {
-                arguments = Bundle().apply {
-                    putSerializable(MODE_REQUEST_LIST, shopId)
-                }
-            }
-        }
     }
 
 }

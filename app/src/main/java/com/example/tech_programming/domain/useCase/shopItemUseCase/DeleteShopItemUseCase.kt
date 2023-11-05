@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class DeleteShopItemUseCase @Inject constructor(private val shopItemRepository: ShopItemRepository) {
 
-    suspend fun deleteShopItemUseCase(shopItem: ShopItem) {
-        shopItemRepository.deleteShopItem(shopItem)
+    suspend fun deleteShopItemUseCase(shopItem: ShopItem, shopId:Int) {
+        shopItemRepository.deleteShopItem(shopItem, shopId)
     }
 }

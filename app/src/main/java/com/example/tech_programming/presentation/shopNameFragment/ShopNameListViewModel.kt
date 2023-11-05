@@ -1,4 +1,4 @@
-package com.example.tech_programming.presentation.shopFragment
+package com.example.tech_programming.presentation.shopNameFragment
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

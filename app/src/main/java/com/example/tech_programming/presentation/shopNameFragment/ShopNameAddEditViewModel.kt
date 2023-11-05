@@ -1,4 +1,4 @@
-package com.example.tech_programming.presentation.shopFragment
+package com.example.tech_programming.presentation.shopNameFragment
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,11 +8,10 @@ import com.example.shopinglist.domain.AddShopNameUseCase
 import com.example.shopinglist.domain.EditShopNameListUseCase
 import com.example.shopinglist.domain.GetShopNameUseCase
 import com.example.tech_programming.domain.model.ShopName
-import com.example.tech_programming.domain.model.StorageItem
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ShopNameAddViewModel @Inject constructor(
+class ShopNameAddEditViewModel @Inject constructor(
     private val getShopNameUseCase: GetShopNameUseCase ,
     private val addShopNameUseCase: AddShopNameUseCase ,
     private val editShopNameListUseCase: EditShopNameListUseCase

@@ -1,10 +1,9 @@
-package com.example.tech_programming.presentation.shopFragment
+package com.example.tech_programming.presentation.shopNameFragment
 
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,21 +12,17 @@ import android.widget.EditText
 import androidx.lifecycle.ViewModelProvider
 import com.example.tech_programming.R
 import com.example.tech_programming.databinding.FragmentShopNameAddBinding
-import com.example.tech_programming.databinding.FragmentShopNameBinding
-import com.example.tech_programming.databinding.FragmentStorageEditAddBinding
-import com.example.tech_programming.domain.model.StorageItem
+import com.example.tech_programming.domain.model.ShopName
 import com.example.tech_programming.presentation.AppApplication
 import com.example.tech_programming.presentation.ViewModelFactory
-import com.example.tech_programming.presentation.storageItemFragment.StorageEditAddFragment
-import com.example.tech_programming.presentation.storageItemFragment.StorageEditAddViewModel
 import com.google.android.material.textfield.TextInputLayout
 import javax.inject.Inject
 
 
-class ShopNameAddFragment : Fragment() {
+class ShopNameAddEditFragment : Fragment() {
 
 
-    private lateinit var viewModel: ShopNameAddViewModel
+    private lateinit var viewModel: ShopNameAddEditViewModel
     private lateinit var onEditingFinishedListener: OnEditingFinishedListener
 
 
@@ -36,6 +31,8 @@ class ShopNameAddFragment : Fragment() {
         get() = _binding!!
 
     private var screenMode: String = MODE_UNKNOWN
+    private var shopNameId:Int = ShopName.Unknown_ID
+
 
     private lateinit var tilName: TextInputLayout
     private lateinit var etName: EditText
@@ -76,7 +73,7 @@ class ShopNameAddFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        viewModel = ViewModelProvider(this, viewModelFactory)[ShopNameAddViewModel::class.java]
+        viewModel = ViewModelProvider(this, viewModelFactory)[ShopNameAddEditViewModel::class.java]
         initViews()
 
         etName.addTextChangedListener(object : TextWatcher {
@@ -96,6 +93,7 @@ class ShopNameAddFragment : Fragment() {
 
         when (screenMode) {
             MODE_ADD_SHOP_NAME_ITEM -> launchAdd()
+            MODE_EDIT_SHOP_NAME_ITEM-> launchEdit()
         }
 
 
@@ -121,8 +119,18 @@ class ShopNameAddFragment : Fragment() {
 
     private fun launchAdd() {
         binding.btnSave.setOnClickListener {
-            Log.d("asdasdasd", "clicked")
             viewModel.addShopName(etName.text?.toString())
+        }
+    }
+
+
+    private fun launchEdit(){
+        viewModel.getStorageItem(shopNameId)
+        viewModel.storageItem.observe(viewLifecycleOwner) {
+            etName.setText(it.name)
+        }
+        binding.btnSave.setOnClickListener {
+            viewModel.editShopName(etName.text?.toString())
         }
     }
 
@@ -131,10 +139,18 @@ class ShopNameAddFragment : Fragment() {
         val args = requireArguments()
 
         val mode = args.getString(MODE_SHOP_NAME_ITEM)
-        if (mode != MODE_ADD_SHOP_NAME_ITEM) {
+        if (mode != MODE_ADD_SHOP_NAME_ITEM && mode!=MODE_EDIT_SHOP_NAME_ITEM) {
             throw RuntimeException("UNKNOWN screen $mode")
         }
         screenMode = mode
+
+
+        if (screenMode == MODE_EDIT_SHOP_NAME_ITEM) {
+            if (!args.containsKey(EXTRA_STORAGE_ITEM_ID)) {
+                throw RuntimeException("Param Shop item id is absent")
+            }
+            shopNameId = args.getInt(EXTRA_STORAGE_ITEM_ID, ShopName.Unknown_ID)
+        }
 
     }
 
@@ -153,15 +169,26 @@ class ShopNameAddFragment : Fragment() {
 
         private const val MODE_UNKNOWN = ""
 
+        private const val EXTRA_STORAGE_ITEM_ID = "extra_storageE_item_id"
 
         private const val MODE_SHOP_NAME_ITEM = "ModeShopNameItem"
-        private const val MODE_ADD_SHOP_NAME_ITEM = "add_mode_StorageItem"
+        private const val MODE_ADD_SHOP_NAME_ITEM = "add_mode_ShopName"
+        private const val MODE_EDIT_SHOP_NAME_ITEM = "edit_mode_ShopName"
 
 
-        fun newInstanceAdd(): ShopNameAddFragment {
-            return ShopNameAddFragment().apply {
+        fun newInstanceAdd(): ShopNameAddEditFragment {
+            return ShopNameAddEditFragment().apply {
                 arguments = Bundle().apply {
                     putSerializable(MODE_SHOP_NAME_ITEM, MODE_ADD_SHOP_NAME_ITEM)
+                }
+            }
+        }
+
+        fun newInstanceEdit(id: Int): ShopNameAddEditFragment {
+            return ShopNameAddEditFragment().apply {
+                arguments = Bundle().apply {
+                    putSerializable(MODE_SHOP_NAME_ITEM, MODE_EDIT_SHOP_NAME_ITEM)
+                    putSerializable(EXTRA_STORAGE_ITEM_ID, id)
                 }
             }
         }

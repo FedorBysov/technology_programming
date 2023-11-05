@@ -7,14 +7,17 @@ import androidx.fragment.app.Fragment
 import com.example.tech_programming.R
 import com.example.tech_programming.databinding.ActivityMainBinding
 import com.example.tech_programming.presentation.requestFragment.AllRequestShopNameFragment
-import com.example.tech_programming.presentation.requestFragment.needList.NeedAddEditRequestFragment
-import com.example.tech_programming.presentation.shopFragment.ShopNameAddFragment
-import com.example.tech_programming.presentation.shopFragment.ShopNameListFragment
+import com.example.tech_programming.presentation.requestFragment.needRequestList.NeedAddEditRequestFragment
+import com.example.tech_programming.presentation.shopItemFragment.NeedAddEditShopItemFragment
+import com.example.tech_programming.presentation.shopNameFragment.ShopNameAddEditFragment
+import com.example.tech_programming.presentation.shopNameFragment.ShopNameListFragment
 import com.example.tech_programming.presentation.storageItemFragment.StorageEditAddFragment
 import com.example.tech_programming.presentation.storageItemFragment.StorageItemListFragment
 
 class MainActivity : AppCompatActivity(), StorageEditAddFragment.OnEditingFinishedListener,
-    ShopNameAddFragment.OnEditingFinishedListener, NeedAddEditRequestFragment.OnEditingFinishedListener {
+    ShopNameAddEditFragment.OnEditingFinishedListener,
+    NeedAddEditRequestFragment.OnEditingFinishedListener,
+    NeedAddEditShopItemFragment.OnEditingFinishedListener {
 
     private lateinit var binding: ActivityMainBinding
 

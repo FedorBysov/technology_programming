@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class EditRequestListUseCase @Inject constructor(private val requestItemRepository: RequestItemRepository) {
 
-    suspend fun editShopList(requestItem: RequestItem, ){
+    suspend fun editShopList(requestItem: RequestItem){
         requestItemRepository.editRequestItem(requestItem)
     }
 

@@ -1,6 +1,7 @@
-package com.example.tech_programming.presentation.storageItemFragment
+package com.example.tech_programming.presentation.shopItemFragment
 
 import android.content.Context
+import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,29 +11,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import androidx.lifecycle.ViewModelProvider
 import com.example.tech_programming.R
-import com.example.tech_programming.databinding.FragmentStorageEditAddBinding
+import com.example.tech_programming.databinding.FragmentNeedAddEditShopItemBinding
+import com.example.tech_programming.domain.model.RequestItem
+import com.example.tech_programming.domain.model.ShopItem
 import com.example.tech_programming.domain.model.StorageItem
 import com.example.tech_programming.presentation.AppApplication
 import com.example.tech_programming.presentation.ViewModelFactory
 import com.google.android.material.textfield.TextInputLayout
 import javax.inject.Inject
 
-
-class StorageEditAddFragment : Fragment() {
-
-
-    private lateinit var viewModel: StorageEditAddViewModel
+class NeedAddEditShopItemFragment : Fragment() {
+    private lateinit var viewModel: NeedAddEditShopItemViewModel
     private lateinit var onEditingFinishedListener: OnEditingFinishedListener
 
 
-    private var _binding: FragmentStorageEditAddBinding? = null
+    private var _binding: FragmentNeedAddEditShopItemBinding? = null
     private val binding
         get() = _binding!!
 
     private var screenMode: String = MODE_UNKNOWN
-    private var shopItemId: Int = StorageItem.Unknown_ID
+    private var shopId: Int = 0
+
+    private var NeedShopItemId: Int = StorageItem.Unknown_ID
 
     private lateinit var tilName: TextInputLayout
     private lateinit var tilCount: TextInputLayout
@@ -67,7 +68,7 @@ class StorageEditAddFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentStorageEditAddBinding.inflate(layoutInflater)
+        _binding = FragmentNeedAddEditShopItemBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -75,7 +76,8 @@ class StorageEditAddFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        viewModel = ViewModelProvider(this, viewModelFactory)[StorageEditAddViewModel::class.java]
+        viewModel =
+            ViewModelProvider(this, viewModelFactory)[NeedAddEditShopItemViewModel::class.java]
         initViews()
 
         etName.addTextChangedListener(object : TextWatcher {
@@ -105,8 +107,8 @@ class StorageEditAddFragment : Fragment() {
         })
 
         when (screenMode) {
-            MODE_EDIT_STORAGE_ITEM -> launchEdit()
-            MODE_ADD_STORAGE_ITEM -> launchAdd()
+            MODE_EDIT_SHOP_ITEM -> launchEdit(shopId)
+            MODE_ADD_SHOP_ITEM -> launchAdd(shopId)
         }
         viewModel.errorInputCount.observe(viewLifecycleOwner) {
             val message = if (it) {
@@ -130,14 +132,14 @@ class StorageEditAddFragment : Fragment() {
 
     }
 
-    private fun launchEdit() {
-        viewModel.getStorageItem(shopItemId)
-        viewModel.storageItem.observe(viewLifecycleOwner) {
+    private fun launchEdit(shopId: Int) {
+        viewModel.getShopItem(NeedShopItemId, shopId)
+        viewModel.shopItem.observe(viewLifecycleOwner) {
             etName.setText(it.name)
             etCount.setText(it.count.toString())
         }
         binding.btnSave.setOnClickListener {
-            viewModel.editStorageItem(etName.text?.toString(), etCount.text?.toString())
+            viewModel.editShopItem(etName.text?.toString(), etCount.text?.toString())
         }
     }
 
@@ -147,10 +149,10 @@ class StorageEditAddFragment : Fragment() {
         }
     }
 
-    private fun launchAdd() {
+    private fun launchAdd(shopId: Int) {
         binding.btnSave.setOnClickListener {
             Log.d("asdasdasd", "clicked")
-            viewModel.addStorageItem(etName.text?.toString(), etCount.text?.toString())
+            viewModel.addShopItem(etName.text?.toString(), etCount.text?.toString(), shopId)
         }
     }
 
@@ -158,17 +160,18 @@ class StorageEditAddFragment : Fragment() {
 
         val args = requireArguments()
 
-        val mode = args.getString(MODE_STORAGE_ITEM)
-        if (mode != MODE_EDIT_STORAGE_ITEM && mode != MODE_ADD_STORAGE_ITEM) {
+        val mode = args.getString(MODE_SHOP_ITEM)
+        if (mode != MODE_EDIT_SHOP_ITEM && mode != MODE_ADD_SHOP_ITEM) {
             throw RuntimeException("UNKNOWN screen $mode")
         }
         screenMode = mode
+        shopId = args.getInt(EXTRA_SHOP_ITEM_ID)
 
-        if (screenMode == MODE_EDIT_STORAGE_ITEM) {
-            if (!args.containsKey(EXTRA_STORAGE_ITEM_ID)) {
+        if (screenMode == MODE_EDIT_SHOP_ITEM) {
+            if (!args.containsKey(EXTRA_SHOP_LIST_ID)) {
                 throw RuntimeException("Param Shop item id is absent")
             }
-            shopItemId = args.getInt(EXTRA_STORAGE_ITEM_ID, StorageItem.Unknown_ID)
+            NeedShopItemId = args.getInt(EXTRA_SHOP_LIST_ID, ShopItem.Unknown_ID)
         }
     }
 
@@ -186,34 +189,37 @@ class StorageEditAddFragment : Fragment() {
 
 
     companion object {
-        private const val EXTRA_STORAGE_ITEM_ID = "extra_storage_item_id"
+        private const val EXTRA_SHOP_ITEM_ID = "extra_shop_item_id"
+        private const val EXTRA_SHOP_LIST_ID = "extra_shop_list_id"
+
+
 
         private const val MODE_UNKNOWN = ""
 
 
-        private const val MODE_STORAGE_ITEM = "ModeStorageItem"
-        private const val MODE_EDIT_STORAGE_ITEM = "edit_mode_StorageItem"
-        private const val MODE_ADD_STORAGE_ITEM = "add_mode_StorageItem"
+        private const val MODE_SHOP_ITEM = "ModeRequestItem"
+        private const val MODE_EDIT_SHOP_ITEM = "edit_mode_shop_item"
+        private const val MODE_ADD_SHOP_ITEM = "add_mode_shop_item"
 
 
-        fun newInstanceAdd(): StorageEditAddFragment {
-            return StorageEditAddFragment().apply {
+        fun newInstanceAdd(shopId: Int): NeedAddEditShopItemFragment {
+            return NeedAddEditShopItemFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(MODE_STORAGE_ITEM, MODE_ADD_STORAGE_ITEM)
+                    putSerializable(MODE_SHOP_ITEM, MODE_ADD_SHOP_ITEM)
+                    putSerializable(EXTRA_SHOP_ITEM_ID, shopId)
                 }
             }
         }
 
-        fun newInstanceEdit(storageId: Int): StorageEditAddFragment {
-            return StorageEditAddFragment().apply {
+        fun newInstanceEdit(id: Int, shopId: Int): NeedAddEditShopItemFragment {
+            return NeedAddEditShopItemFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(MODE_STORAGE_ITEM, MODE_EDIT_STORAGE_ITEM)
-                    putSerializable(EXTRA_STORAGE_ITEM_ID, storageId)
+                    putSerializable(MODE_SHOP_ITEM, MODE_EDIT_SHOP_ITEM)
+                    putSerializable(EXTRA_SHOP_LIST_ID, id)
+                    putSerializable(EXTRA_SHOP_ITEM_ID, shopId)
                 }
             }
         }
     }
 
 }
-
-

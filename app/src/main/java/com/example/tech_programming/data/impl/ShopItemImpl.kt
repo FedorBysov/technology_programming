@@ -17,8 +17,8 @@ class ShopItemImpl @Inject constructor(
             mapper.mapListDbModelToListShopItemEntity(it)
         }
 
-    override suspend fun getShopItem(shopItemId: Int):ShopItem {
-        val db = shopItemDao.getShopItem(shopItemId)
+    override suspend fun getShopItem(shopItemId: Int, shopId: Int):ShopItem {
+        val db = shopItemDao.getShopItem(shopItemId, shopId)
         return mapper.mapDbModelToShopItemEntity(db)
     }
 
@@ -26,12 +26,17 @@ class ShopItemImpl @Inject constructor(
         shopItemDao.addShopItems(mapper.mapEntityToShopItemDbModel(shopItem))
     }
 
-    override suspend fun deleteShopItem(shopItem: ShopItem) {
-        shopItemDao.deleteShopItemItem(shopItem.id)
+    override suspend fun deleteShopItem(shopItem: ShopItem, shopId:Int) {
+        shopItemDao.deleteShopItemItem(shopItem.id, shopId)
     }
 
     override suspend fun editShopItem(shopItem: ShopItem) {
         shopItemDao.addShopItems(mapper.mapEntityToShopItemDbModel(shopItem))
+    }
+
+    override fun getShopItemsListTable(shopId: Int): LiveData<List<ShopItem>> =
+        Transformations.map(shopItemDao.getShopItemsListTable(shopId)){
+        mapper.mapListDbModelToListShopItemEntity(it)
     }
 
 
