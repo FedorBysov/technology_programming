@@ -1,4 +1,4 @@
-package com.example.tech_programming.data.db.mapper
+package com.example.tech_programming.data.db
 
 import com.example.tech_programming.data.db.model.RequestItemDbModel
 import com.example.tech_programming.data.db.model.ShopItemDbModel

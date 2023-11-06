@@ -1,17 +1,17 @@
 package com.example.tech_programming.presentation.requestFragment.needRequestList
 
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tech_programming.R
-import com.example.tech_programming.databinding.FragmentNeedListRequestBinding
+import com.example.tech_programming.databinding.FragmentListItemsBinding
 import com.example.tech_programming.presentation.AppApplication
 import com.example.tech_programming.presentation.ViewModelFactory
 import com.example.tech_programming.presentation.adapter.AdapterRequestItem
@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 class NeedListRequestFragment : Fragment(), NeedAddEditRequestFragment.OnEditingFinishedListener{
 
-    private lateinit var _binding: FragmentNeedListRequestBinding
+    private lateinit var _binding: FragmentListItemsBinding
     private val binding
         get() = _binding!!
     private lateinit var viewModel: NeedListRequestViewModel
@@ -58,7 +58,7 @@ class NeedListRequestFragment : Fragment(), NeedAddEditRequestFragment.OnEditing
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentNeedListRequestBinding.inflate(layoutInflater)
+        _binding = FragmentListItemsBinding.inflate(layoutInflater)
         return binding.root
     }
 

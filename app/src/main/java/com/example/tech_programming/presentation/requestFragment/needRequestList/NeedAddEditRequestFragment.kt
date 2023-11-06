@@ -1,18 +1,18 @@
 package com.example.tech_programming.presentation.requestFragment.needRequestList
 
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.tech_programming.R
-import com.example.tech_programming.databinding.FragmentNeedAddEditRequestBinding
+import com.example.tech_programming.databinding.FragmentAddEditBinding
 import com.example.tech_programming.domain.model.RequestItem
 import com.example.tech_programming.domain.model.StorageItem
 import com.example.tech_programming.presentation.AppApplication
@@ -27,7 +27,7 @@ class NeedAddEditRequestFragment : Fragment() {
     private lateinit var onEditingFinishedListener: OnEditingFinishedListener
 
 
-    private var _binding: FragmentNeedAddEditRequestBinding? = null
+    private var _binding: FragmentAddEditBinding? = null
     private val binding
         get() = _binding!!
 
@@ -69,7 +69,7 @@ class NeedAddEditRequestFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentNeedAddEditRequestBinding.inflate(layoutInflater)
+        _binding = FragmentAddEditBinding.inflate(layoutInflater)
         return binding.root
     }
 

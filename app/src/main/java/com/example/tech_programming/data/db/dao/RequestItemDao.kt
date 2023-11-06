@@ -12,8 +12,7 @@ import com.example.tech_programming.data.db.model.StorageItemDbModel
 
 @Dao
 interface RequestItemDao {
-    @Query("SELECT * FROM request_items")
-    fun getRequestItemsList(): LiveData<List<RequestItemDbModel>>
+
 
     @Query("SELECT * FROM request_items WHERE shopId = :shopId")
     fun getRequestItemsListTable(shopId:Int): LiveData<List<RequestItemDbModel>>

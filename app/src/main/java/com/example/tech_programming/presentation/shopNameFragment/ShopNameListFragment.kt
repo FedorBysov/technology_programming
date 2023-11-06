@@ -1,17 +1,17 @@
 package com.example.tech_programming.presentation.shopNameFragment
 
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tech_programming.R
-import com.example.tech_programming.databinding.FragmentShopNameBinding
+import com.example.tech_programming.databinding.FragmentListItemsBinding
 import com.example.tech_programming.presentation.AppApplication
 import com.example.tech_programming.presentation.ViewModelFactory
 import com.example.tech_programming.presentation.adapter.AdapterShopName
@@ -22,7 +22,7 @@ import javax.inject.Inject
 class ShopNameListFragment : Fragment() , ShopNameAddEditFragment.OnEditingFinishedListener {
 
 
-    private lateinit var _binding: FragmentShopNameBinding
+    private lateinit var _binding: FragmentListItemsBinding
     private val binding
         get() = _binding!!
     private lateinit var viewModel: ShopNameListViewModel
@@ -50,7 +50,7 @@ class ShopNameListFragment : Fragment() , ShopNameAddEditFragment.OnEditingFinis
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentShopNameBinding.inflate(layoutInflater)
+        _binding = FragmentListItemsBinding.inflate(layoutInflater)
         return binding.root
     }
 

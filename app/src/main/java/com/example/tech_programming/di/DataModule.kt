@@ -6,14 +6,8 @@ import com.example.tech_programming.data.db.dao.RequestItemDao
 import com.example.tech_programming.data.db.dao.ShopItemDao
 import com.example.tech_programming.data.db.dao.ShopNameDao
 import com.example.tech_programming.data.db.dao.StorageItemDao
-import com.example.tech_programming.data.impl.RequestItemImpl
-import com.example.tech_programming.data.impl.ShopItemImpl
-import com.example.tech_programming.data.impl.ShopNameImpl
-import com.example.tech_programming.data.impl.StorageItemImpl
-import com.example.tech_programming.domain.repository.RequestItemRepository
-import com.example.tech_programming.domain.repository.ShopItemRepository
-import com.example.tech_programming.domain.repository.ShopNameRepository
-import com.example.tech_programming.domain.repository.StorageItemRepository
+import com.example.tech_programming.data.AppImpl
+import com.example.tech_programming.domain.Repository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -22,19 +16,8 @@ import dagger.Provides
 interface DataModule {
     @ApplicationScope
     @Binds
-    fun bindRequestItemRepository(impl: RequestItemImpl): RequestItemRepository
+    fun bindRepository(appImpl: AppImpl): Repository
 
-    @ApplicationScope
-    @Binds
-    fun bindShopItemRepository(impl: ShopItemImpl): ShopItemRepository
-
-    @ApplicationScope
-    @Binds
-    fun bindShopNameRepository(impl: ShopNameImpl): ShopNameRepository
-
-    @ApplicationScope
-    @Binds
-    fun bindStorageItemRepository(impl: StorageItemImpl): StorageItemRepository
 
 
     companion object{

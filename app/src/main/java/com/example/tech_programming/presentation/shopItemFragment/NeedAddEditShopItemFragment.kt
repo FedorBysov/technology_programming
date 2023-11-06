@@ -1,19 +1,18 @@
 package com.example.tech_programming.presentation.shopItemFragment
 
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.tech_programming.R
-import com.example.tech_programming.databinding.FragmentNeedAddEditShopItemBinding
-import com.example.tech_programming.domain.model.RequestItem
+import com.example.tech_programming.databinding.FragmentAddEditBinding
 import com.example.tech_programming.domain.model.ShopItem
 import com.example.tech_programming.domain.model.StorageItem
 import com.example.tech_programming.presentation.AppApplication
@@ -26,7 +25,7 @@ class NeedAddEditShopItemFragment : Fragment() {
     private lateinit var onEditingFinishedListener: OnEditingFinishedListener
 
 
-    private var _binding: FragmentNeedAddEditShopItemBinding? = null
+    private var _binding: FragmentAddEditBinding? = null
     private val binding
         get() = _binding!!
 
@@ -68,7 +67,7 @@ class NeedAddEditShopItemFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentNeedAddEditShopItemBinding.inflate(layoutInflater)
+        _binding = FragmentAddEditBinding.inflate(layoutInflater)
         return binding.root
     }
 

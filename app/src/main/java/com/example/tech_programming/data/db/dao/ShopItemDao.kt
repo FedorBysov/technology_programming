@@ -10,8 +10,7 @@ import com.example.tech_programming.data.db.model.ShopItemDbModel
 import com.example.tech_programming.data.db.model.StorageItemDbModel
 @Dao
 interface ShopItemDao {
-    @Query("SELECT * FROM shop_items")
-    fun getShopItemsList(): LiveData<List<ShopItemDbModel>>
+
 
     @Query("SELECT * FROM shop_items WHERE shopId = :shopId")
     fun getShopItemsListTable(shopId: Int): LiveData<List<ShopItemDbModel>>

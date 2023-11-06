@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tech_programming.R
-import com.example.tech_programming.databinding.FragmentStorageItemListBinding
+import com.example.tech_programming.databinding.FragmentListItemsBinding
 import com.example.tech_programming.presentation.AppApplication
 import com.example.tech_programming.presentation.ViewModelFactory
 import com.example.tech_programming.presentation.adapter.AdapterStorageItem
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 class StorageItemListFragment:Fragment(), StorageEditAddFragment.OnEditingFinishedListener {
 
-    private lateinit var _binding: FragmentStorageItemListBinding
+    private lateinit var _binding: FragmentListItemsBinding
     private val binding
         get() = _binding!!
     private lateinit var viewModel: StorageItemListViewModel
@@ -47,7 +47,7 @@ class StorageItemListFragment:Fragment(), StorageEditAddFragment.OnEditingFinish
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentStorageItemListBinding.inflate(layoutInflater)
+        _binding = FragmentListItemsBinding.inflate(layoutInflater)
         return binding.root
     }
 

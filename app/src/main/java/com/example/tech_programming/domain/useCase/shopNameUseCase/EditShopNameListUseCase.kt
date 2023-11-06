@@ -1,13 +1,13 @@
 package com.example.shopinglist.domain
 
 import com.example.tech_programming.domain.model.ShopName
-import com.example.tech_programming.domain.repository.ShopNameRepository
+import com.example.tech_programming.domain.Repository
 import javax.inject.Inject
 
-class EditShopNameListUseCase @Inject constructor(private val shopNameRepository: ShopNameRepository) {
+class EditShopNameListUseCase @Inject constructor(private val repository: Repository) {
 
     suspend fun editShopNameListUseCase(shopName: ShopName){
-        shopNameRepository.editShopName(shopName)
+        repository.editShopName(shopName)
     }
 
 }

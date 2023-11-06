@@ -1,28 +1,26 @@
 package com.example.tech_programming.presentation.shopItemFragment
 
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tech_programming.R
-import com.example.tech_programming.databinding.FragmentNeedListShopItemBinding
+import com.example.tech_programming.databinding.FragmentListItemsBinding
 import com.example.tech_programming.presentation.AppApplication
 import com.example.tech_programming.presentation.ViewModelFactory
 import com.example.tech_programming.presentation.adapter.AdapterShopItem
 import com.example.tech_programming.presentation.adapter.AdapterStorageItem
-import com.example.tech_programming.presentation.requestFragment.needRequestList.NeedAddEditRequestFragment
-import com.example.tech_programming.presentation.requestFragment.needRequestList.NeedListRequestFragment
 import javax.inject.Inject
 
 class NeedListShopItemFragment : Fragment(), NeedAddEditShopItemFragment.OnEditingFinishedListener{
 
-    private lateinit var _binding: FragmentNeedListShopItemBinding
+    private lateinit var _binding: FragmentListItemsBinding
     private val binding
         get() = _binding!!
     private lateinit var viewModel: NeedListShopItemViewModel
@@ -60,7 +58,7 @@ class NeedListShopItemFragment : Fragment(), NeedAddEditShopItemFragment.OnEditi
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentNeedListShopItemBinding.inflate(layoutInflater)
+        _binding = FragmentListItemsBinding.inflate(layoutInflater)
         return binding.root
     }
 

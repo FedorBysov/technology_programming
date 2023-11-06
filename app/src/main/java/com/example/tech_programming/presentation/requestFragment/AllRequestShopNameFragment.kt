@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tech_programming.R
-import com.example.tech_programming.databinding.FragmentAllRequestShopNameBinding
+import com.example.tech_programming.databinding.FragmentListItemsBinding
 import com.example.tech_programming.presentation.AppApplication
 import com.example.tech_programming.presentation.ViewModelFactory
 import com.example.tech_programming.presentation.adapter.AdapterShopName
@@ -23,7 +23,7 @@ import javax.inject.Inject
 class AllRequestShopNameFragment : Fragment() {
 
 
-    private lateinit var _binding: FragmentAllRequestShopNameBinding
+    private lateinit var _binding: FragmentListItemsBinding
     private val binding
         get() = _binding!!
     private lateinit var viewModel: ShopNameListViewModel
@@ -45,7 +45,7 @@ class AllRequestShopNameFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentAllRequestShopNameBinding.inflate(layoutInflater)
+        _binding = FragmentListItemsBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -55,6 +55,7 @@ class AllRequestShopNameFragment : Fragment() {
 
         viewModel = ViewModelProvider(this, viewModelFactory)[ShopNameListViewModel::class.java]
 
+        binding.btnAdd.visibility = View.INVISIBLE
 
         setupAdapter()
         setupClick()
@@ -107,7 +108,7 @@ class AllRequestShopNameFragment : Fragment() {
         mainAdapter.onShopNameClickListener= {
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment, NeedListRequestFragment.newInstance(it.id))
-//                .addToBackStack(null)
+                .addToBackStack(null)
                 .commit()
         }
     }
