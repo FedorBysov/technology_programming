@@ -3,7 +3,7 @@ package com.example.tech_programming.presentation.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.example.tech_programming.databinding.ItemCardActivBinding
+import com.example.tech_programming.databinding.ItemCardBinding
 import com.example.tech_programming.domain.model.RequestItem
 
 class AdapterRequestItem : ListAdapter<RequestItem, ViewHolder>(RequestItemDiffCallBack()) {
@@ -14,9 +14,11 @@ class AdapterRequestItem : ListAdapter<RequestItem, ViewHolder>(RequestItemDiffC
     var onRequestItemClickListener: ((RequestItem) -> Unit)? = null
 
 
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
-            ItemCardActivBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -24,9 +26,10 @@ class AdapterRequestItem : ListAdapter<RequestItem, ViewHolder>(RequestItemDiffC
         val requestItem = getItem(position)
         with(holder) {
 
-
             text.text = requestItem.name
             count.text = requestItem.count.toString()
+
+
 
             itemView.setOnClickListener {
                 onRequestItemClickListener?.invoke(requestItem)

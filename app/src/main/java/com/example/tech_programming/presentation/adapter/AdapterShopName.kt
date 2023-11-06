@@ -3,8 +3,7 @@ package com.example.tech_programming.presentation.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.example.tech_programming.databinding.ItemCardActivBinding
-import com.example.tech_programming.domain.model.ShopItem
+import com.example.tech_programming.databinding.ItemCardBinding
 import com.example.tech_programming.domain.model.ShopName
 
 class AdapterShopName : ListAdapter<ShopName, ViewHolder>(ShopNameDiffCallBack()) {
@@ -13,11 +12,13 @@ class AdapterShopName : ListAdapter<ShopName, ViewHolder>(ShopNameDiffCallBack()
 
 
     var onShopNameClickListener: ((ShopName) -> Unit)? = null
+    var onShopNameLongClickListener: ((ShopName) -> Unit)? = null
+
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
-            ItemCardActivBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -31,6 +32,10 @@ class AdapterShopName : ListAdapter<ShopName, ViewHolder>(ShopNameDiffCallBack()
 
             itemView.setOnClickListener {
                 onShopNameClickListener?.invoke(requestItem)
+            }
+            itemView.setOnLongClickListener {
+                onShopNameLongClickListener?.invoke(requestItem)
+                true
             }
 
         }

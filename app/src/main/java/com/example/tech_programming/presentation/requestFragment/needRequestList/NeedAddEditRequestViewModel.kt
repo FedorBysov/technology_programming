@@ -1,0 +1,109 @@
+package com.example.tech_programming.presentation.requestFragment.needRequestList
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.shopinglist.domain.AddRequestItemUseCase
+import com.example.shopinglist.domain.EditRequestListUseCase
+import com.example.shopinglist.domain.GetRequestItemUseCase
+import com.example.tech_programming.domain.model.RequestItem
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+class NeedAddEditRequestViewModel @Inject constructor(
+    private val getRequestItemUseCase: GetRequestItemUseCase,
+    private val addRequestItemUseCase: AddRequestItemUseCase,
+    private val editRequestListUseCase: EditRequestListUseCase
+) : ViewModel() {
+
+
+    private val _errorInputName = MutableLiveData<Boolean>()
+    val errorInputName: LiveData<Boolean>
+        get() = _errorInputName
+
+    private val _errorInputCount = MutableLiveData<Boolean>()
+    val errorInputCount: LiveData<Boolean>
+        get() = _errorInputCount
+
+    private val _requestItem = MutableLiveData<RequestItem>()
+    val requestItem: LiveData<RequestItem>
+        get() = _requestItem
+
+    private val _shouldCloseScreen = MutableLiveData<Unit>()
+    val shouldCloseScreen: LiveData<Unit>
+        get() = _shouldCloseScreen
+
+    fun getRequestItem(requestItem: Int, shopId:Int) {
+        viewModelScope.launch {
+            val item = getRequestItemUseCase.getRequestItem(requestItem, shopId)
+            _requestItem.postValue(item)
+        }
+
+    }
+
+    fun addRequestItem(inputName: String?, inputCount: String?, shopId: Int) {
+        val name = validateName(inputName)
+        val count = validateCount(inputCount)
+        val fieldsValid = validateInput(name, count)
+        if (fieldsValid) {
+            viewModelScope.launch {
+                val requestItem = RequestItem(count, name , shopId )
+                addRequestItemUseCase.addShopItemUseCase(requestItem)
+                finishWork()
+            }
+        }
+    }
+
+    fun editRequestItem(inputName: String?, inputCount: String?) {
+        val name = validateName(inputName)
+        val count = validateCount(inputCount)
+        if (validateInput(name, count)) {
+            viewModelScope.launch {
+                _requestItem.value?.let {
+                    val item = it.copy(count, name)
+                    editRequestListUseCase.editShopList(item)
+                    finishWork()
+                }
+
+            }
+        }
+    }
+
+    fun validateName(inputName: String?): String {
+        return inputName?.trim() ?: ""
+    }
+
+    fun validateCount(inputCount: String?): Int {
+        return try {
+            inputCount?.trim()?.toInt() ?: 0
+        } catch (e: java.lang.Exception) {
+            0
+        }
+    }
+
+    fun validateInput(name: String, count: Int): Boolean {
+        var result = true
+        if (name.isBlank()) {
+            _errorInputName.value = true
+            result = false
+        }
+        if (count <= 0) {
+            _errorInputCount.value = true
+            result = false
+        }
+        return result
+    }
+
+    fun resetInputName() {
+        _errorInputName.value = false
+    }
+
+    fun resetInputCount() {
+        _errorInputCount.value = false
+    }
+
+    fun finishWork() {
+        _shouldCloseScreen.postValue(Unit)
+    }
+}

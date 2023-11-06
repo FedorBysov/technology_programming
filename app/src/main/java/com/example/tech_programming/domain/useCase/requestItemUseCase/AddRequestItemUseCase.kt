@@ -1,13 +1,12 @@
 package com.example.shopinglist.domain
 
 import com.example.tech_programming.domain.model.RequestItem
-import com.example.tech_programming.domain.model.StorageItem
-import com.example.tech_programming.domain.repository.RequestItemRepository
+import com.example.tech_programming.domain.Repository
 import javax.inject.Inject
 
-class AddRequestItemUseCase @Inject constructor(private val requestItemRepository: RequestItemRepository) {
+class AddRequestItemUseCase @Inject constructor(private val repository: Repository) {
 
     suspend fun addShopItemUseCase(requestItem: RequestItem){
-        return requestItemRepository.addRequestItem(requestItem)
+        return repository.addRequestItem(requestItem)
     }
 }

@@ -12,15 +12,17 @@ import com.example.tech_programming.data.db.model.StorageItemDbModel
 
 @Dao
 interface RequestItemDao {
-    @Query("SELECT * FROM request_items")
-    fun getRequestItemsList(): LiveData<List<RequestItemDbModel>>
+
+
+    @Query("SELECT * FROM request_items WHERE shopId = :shopId")
+    fun getRequestItemsListTable(shopId:Int): LiveData<List<RequestItemDbModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addRequestItem(requestItemDbModel: RequestItemDbModel)
 
-    @Query("DELETE FROM request_items WHERE id = :requestItemID")
-    suspend fun deleteRequestItem(requestItemID: Int)
+    @Query("DELETE FROM request_items WHERE id = :requestItemID AND shopId = :shopId")
+    suspend fun deleteRequestItem(requestItemID: Int, shopId: Int)
 
-    @Query("SELECT * FROM request_items WHERE id = :requestItemID LIMIT 1")
-    suspend fun getRequestItem(requestItemID: Int): RequestItemDbModel
+    @Query("SELECT * FROM request_items WHERE id = :requestItemID AND shopId = :shopId LIMIT 1")
+    suspend fun getRequestItem(requestItemID: Int, shopId:Int): RequestItemDbModel
 }

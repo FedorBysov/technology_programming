@@ -8,9 +8,7 @@ import org.jetbrains.annotations.NotNull
 data class StorageItemDbModel (
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    @NotNull
     val name:String,
-    @NotNull
     val count: Int
 
 

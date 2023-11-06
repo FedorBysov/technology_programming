@@ -3,8 +3,9 @@ package com.example.tech_programming.domain.model
 import androidx.room.Entity
 
 data class ShopName(
-    val id:Int = Unknown_ID,
     val name:String,
+    val id:Int = Unknown_ID
+
 )
 {
     companion object{
